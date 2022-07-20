@@ -16,6 +16,20 @@ const getAuthors = (uid) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+// DONE:  GET FAVORITE AUTHORS
+const getFavoriteAuthors = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
+    .then((response) => {
+      if (response.data === null) {
+        resolve(null);
+      } else {
+        const filteredAuthors = Object.values(response.data).filter((author) => author.uid === uid);
+        resolve(filteredAuthors);
+      }
+    })
+    .catch((error) => reject(error));
+});
+
 // DONE: CREATE AUTHOR
 const createAuthor = (authorObj) => new Promise((resolve, reject) => {
   axios.post(`${dbUrl}/authors.json`, authorObj)
@@ -61,6 +75,7 @@ const getAuthorBooks = (firebaseKey) => new Promise((resolve, reject) => {
 
 export {
   getAuthors,
+  getFavoriteAuthors,
   createAuthor,
   getSingleAuthor,
   deleteSingleAuthor,

@@ -5,7 +5,6 @@ import { signOut } from '../utils/auth';
 
 export default function Profile() {
   const { user } = useAuth();
-  console.warn(user);
   return (
     <div>
       <User image={user.photoURL} email={user.email} name={user.displayName} lastLogin={user.metadata.lastSignInTime} />
