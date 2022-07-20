@@ -1,30 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card, Button } from 'react-bootstrap';
+import { deleteSingleAuthor } from '../api/authorData';
 
-function AuthorCard({
-  firstName,
-  lastName,
-  email,
-}) {
+export default function AuthorCard({ authorObj, onUpdate }) {
+  const deleteAuthorAndUpdate = () => {
+    deleteSingleAuthor(authorObj.firebaseKey).then(onUpdate);
+  };
   return (
-    <div>
-      <h1>{firstName}</h1>
-      <h1>{lastName}</h1>
-      <h2>{email}</h2>
-    </div>
+    <>
+      <Card style={{ width: '18rem', margin: '10px' }}>
+        <Card.Body>
+          <Card.Title>{authorObj.first_name} {authorObj.last_name}</Card.Title>
+          <p>Email: {authorObj.email}</p>
+          <p className="card-text bold">{authorObj.favorite ? 'Favorite!' : 'Not a Favorite' }</p>
+          <Button variant="danger" onClick={deleteAuthorAndUpdate} className="m-2">
+            DELETE
+          </Button>
+        </Card.Body>
+      </Card>
+    </>
   );
 }
 
 AuthorCard.propTypes = {
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  email: PropTypes.string,
+  authorObj: PropTypes.shape({
+    name: PropTypes.string,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    email: PropTypes.string,
+    favorite: PropTypes.bool,
+    firebaseKey: PropTypes.string,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
-
-AuthorCard.defaultProps = {
-  firstName: 'Cody',
-  lastName: 'Clark',
-  email: 'cody@email.com',
-};
-
-export default AuthorCard;
