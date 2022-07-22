@@ -60,9 +60,9 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // DONE: UPDATE AUTHOR
-const updateAuthor = (authorObj) => new Promise((resolve, reject) => {
+const updateAuthor = (authorObj, uid) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/authors/${authorObj.firebaseKey}.json`, authorObj)
-    .then(() => getAuthors(authorObj.uid).then(resolve))
+    .then(() => getAuthors(uid).then(resolve))
     .catch(reject);
 });
 
