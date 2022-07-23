@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { Card, Button } from 'react-bootstrap';
-import { deleteSingleAuthor } from '../api/authorData';
+import { deleteAuthorBooks } from '../api/mergedData';
 
 export default function AuthorCard({ authorObj, onUpdate }) {
   const deleteAuthorAndUpdate = () => {
-    deleteSingleAuthor(authorObj.firebaseKey).then(onUpdate);
+    deleteAuthorBooks(authorObj.firebaseKey).then(onUpdate);
   };
   return (
     <>
